@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pers.ScheduleSystem.dao.mapper.UserInfoMapper">
+    <resultMap type="com.pers.ScheduleSystem.dao.Po.UserPo" id="queryUser">
+        <id column="id" property="id"/>
+        <result column="user_name" property="name"/>
+        <result column="pwd" property="pwd"/>
+        <result column="telephone" property="telephone"/>
+    </resultMap>
+
+    <!-- 使用 paramenterMap 查询 -->
+    <select id="getUserByName" parameterType="String" resultMap="queryUser">
+        SELECT id,user_name,pwd,telephone
+        FROM userinfo
+        WHERE user_name=#{name}
+    </select>
+
+    <insert id="addUser" parameterType="com.pers.ScheduleSystem.dao.Po.UserPo">
+        INSERT INTO userinfo VALUES(NULL, #{name}, #{pwd}, #{telephone})
+    </insert>
+
+    <update id="updateUser" parameterType="com.pers.ScheduleSystem.dao.Po.UserPo">
+        UPDATE userinfo
+        SET user_name=#{name}, pwd=#{pwd}, telephone=#{telephone}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delUser">
+        DELETE FROM userinfo WHERE id=#{id}
+    </delete>
+
+    <select id="getAllUsers" resultMap="queryUser">
+        SELECT *
+        FROM userinfo
+    </select>
+
+</mapper>
